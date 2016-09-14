@@ -26,15 +26,28 @@ git clone --recursive https://github.com/lsmaker/LSM_EEPROM.git LSM_EEPROM
 #include <LSMaker.h>
 #include <LSM_EEPROM.h>
 
-
-LSM_EEPROM *eeprom = new LSM_EEPROM();
+char data = 'A';
+char readed;
 
 void setup(){
+
+  Serial.begin(9600);
+
+  //Initialize LSMaker and EEPROM module
   LSMaker::init();
-  LSMaker::addModule(eeprom);
+  LSMaker::addModule(LSM::EEPROM::getInstance());
+
+  //Write data to address 0x00 of internal EEPROM
+  LSM::EEPROM::getInstance()->write(LSM::EEPROM::INTERNAL,0x00,sizeof(char),&data);
+
 }
 
 void loop(){
+
+  LSM::EEPROM::getInstance()->read(LSM::EEPROM::INTERNAL,0x00,sizeof(char),&readed);
+  Serial.write("Data read:");
+  Serial.write(readed);
+  Serial.write("\n");
 
 }
 ```
