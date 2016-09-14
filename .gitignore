@@ -1,0 +1,5 @@
+# Ignore OSX bullshit files
+.DS_Store
+
+# Ignore IDE folders and files
+.vscode/
